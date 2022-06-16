@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.bg-light {
+    background-color: #ececec!important;
+}
+
+.font-size-2 {
+    font-size: 2em;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.vertical-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.horizontal-center {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
