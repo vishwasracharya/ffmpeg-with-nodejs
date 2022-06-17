@@ -1,13 +1,13 @@
-var createError = require('http-errors'),
-    express = require('express'),
-    path = require('path'),
-    cookieParser = require('cookie-parser'),
-    logger = require('morgan'),
-    bodyParser = require('body-parser'),
-    compression = require('compression'),
-    favicon = require('serve-favicon'),
-    app = express()
-;
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const compression = require('compression');
+const favicon = require('serve-favicon');
+const app = express();
+// const expressFileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
 
@@ -21,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(expressFileUpload({useTempFiles: true, tempFileDir: './tmp/'}));
 
 app.use('/', indexRouter);
 
