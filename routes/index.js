@@ -11,8 +11,10 @@ ffmpeg.setFfprobePath(require('@ffprobe-installer/ffprobe').path);
 // const ffmpeg = require('ffmpeg');
 const expressFileUpload = require('express-fileupload');
 
-let dirName = __dirname.replace(/\\/g, '/')
-const uploadDir = dirName + "/../videos/"
+// let dirName = __dirname.replace(/\\/g, '/')
+// const uploadDir = dirName + "/../videos/"
+const uploadDir = keys.uploadDir;
+console.log(uploadDir);
 
 router.use(expressFileUpload({ useTempFiles: true, tempFileDir: './tmp/' }));
 
@@ -60,12 +62,12 @@ router.post('/convertOriginalFile', addLocals, (req, res, next) => {
             console.log("File uploaded successfully!");
         });
 
-        ffmpeg(`videos/${videoName}`)
+        ffmpeg(uploadDir + videoName)
         .withOutputFormat(convertToFormat)
         .on('start', (commandLine) => {
             console.log(`Spawned Ffmpeg with command: ${commandLine}`);
         }).on('end', () => {
-            fs.unlink(`videos/${videoName}`, (err) => {
+            fs.unlink(uploadDir + videoName, (err) => {
                 if (err) throw err;
                 console.log("File deleted successfully!");
             });
@@ -74,7 +76,7 @@ router.post('/convertOriginalFile', addLocals, (req, res, next) => {
             res.sendStatus(200);
         }).on('error', (err) => {
             console.log('an error happened: ' + err.message);
-        }).saveToFile(`public/${outputFileName}`);
+        }).saveToFile(keys.publicDir + outputFileName);
     }
 })
 
@@ -82,7 +84,7 @@ router.post('/deleteConvertedFile', (req, res, next) => {
     const filename = req.headers.filename;
     console.log(req.headers);
     console.log(filename);
-    fs.unlink(`public/${filename}`, (err) => {
+    fs.unlink(keys.publicDir + filename, (err) => {
         if (err) throw err;
         console.log("File deleted successfully!");
     });
