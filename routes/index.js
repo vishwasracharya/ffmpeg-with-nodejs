@@ -39,7 +39,7 @@ router.post('/testing-route', (req, res, next) => {
 });
 
 router.post('/convertOriginalFile', addLocals, (req, res, next) => {
-    req.setTimeout(10000);
+    req.setTimeout(1000000);
     if (!req.files) {
         res.status(400);
         return;
