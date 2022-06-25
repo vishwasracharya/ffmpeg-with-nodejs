@@ -89,8 +89,11 @@
                 <div class="mb-4 text-center">
                   <h3>Video Converted Successfully.</h3>
                   <p class="text-muted">Click on the below button to download your converted video</p>
-                  <a href="" class="btn btn-dark w-100 d-none" id="downloadConvertedFileBtn" download>Download</a>
-                  <button class="btn btn-dark w-100" id="downloadBtn">Download</button>
+                  <!-- <a href="" class="btn btn-dark w-100 d-none" id="downloadConvertedFileBtn" download>Download</a> -->
+                  <form action="/downloadDeleteConvertedFile" method="post">
+                    <input type="hidden" name="filename" id="filename" value="">
+                    <button class="btn btn-dark w-100" id="downloadBtn">Download</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -193,25 +196,8 @@
         if (res.status === 200) {
           document.getElementById('stepOne').classList.add('d-none');
           document.getElementById('successMsg').classList.remove('d-none');
-          document.getElementById('downloadConvertedFileBtn').href = `<%=site_url%>/${outputFilename}`;
-          document.getElementById('downloadBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('downloadConvertedFileBtn').click();
-            setTimeout(() => {
-              fetch('/deleteConvertedFile', {
-                method: 'POST',
-                headers: {
-                  'filename': outputFilename, 
-                }
-              }).then(res => {
-                console.log(res);
-                setTimeout(() => {
-                  window.location.reload();
-                }, 6000);
-              })
-              .catch(err => console.log(err));
-            }, 4000);
-          });
+          // document.getElementById('downloadConvertedFileBtn').href = `<%#=site_url%>/${outputFilename}`;
+          document.getElementById('filename').value = outputFilename;
         }
       })
       .catch(err => console.log(err))

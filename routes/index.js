@@ -50,6 +50,7 @@ router.post('/convertOriginalFile', addLocals, (req, res, next) => {
         let videoName = video.name.split(" ").join("-").toLowerCase();
         const outputFileName = `${videoName.split(".")[0]}.${convertToFormat}`;
         let videoPath = uploadDir + videoName;
+        // let infs = new ffmpeg();
 
         console.log(outputFileName);
         console.log(videoPath);
@@ -63,33 +64,51 @@ router.post('/convertOriginalFile', addLocals, (req, res, next) => {
             console.log("File uploaded successfully!");
         });
 
-        ffmpeg(uploadDir + videoName)
+        ffmpeg()
+        .addInput(videoPath)
+        .videoCodec('libx264') 
+        .output(uploadDir + outputFileName)
         .withOutputFormat(convertToFormat)
         .on('start', (commandLine) => {
             console.log(`Spawned Ffmpeg with command: ${commandLine}`);
-        }).on('end', () => {
-            fs.unlink(uploadDir + videoName, (err) => {
+        })
+        .on('error', (err) => {
+            console.log('an error happened: ' + err.message);
+            fs.unlink(videoPath, (err) => {
+                if (err) throw err;
+                console.log("File deleted successfully!");
+            });
+        }
+        ).on('progress', function (progress) {
+            console.log('Processing: ' + progress.percent + '%')
+        })
+        .on('end', () => {
+            fs.unlink(videoPath, (err) => {
                 if (err) throw err;
                 console.log("File deleted successfully!");
             });
             console.log('Processing finished!');
             console.log('conversion finished');
             res.sendStatus(200);
-        }).on('error', (err) => {
-            console.log('an error happened: ' + err.message);
-        }).saveToFile(keys.publicDir + outputFileName);
+        })
+        .run();
+        // .saveToFile(keys.publicDir + outputFileName);
     }
 })
 
-router.post('/deleteConvertedFile', (req, res, next) => {
-    const filename = req.headers.filename;
-    console.log(req.headers);
-    console.log(filename);
-    fs.unlink(keys.publicDir + filename, (err) => {
-        if (err) throw err;
-        console.log("File deleted successfully!");
+router.post('/downloadDeleteConvertedFile', (req, res, next) => {
+    const filename = req.body.filename;
+    console.log(req.body);
+    console.log(uploadDir+filename);
+    res.download(uploadDir + filename, (err) => {
+        if (err) console.log(err);
+        console.log("File downloaded successfully!");
+        fs.unlink(uploadDir + filename, (err) => {
+            if (err) console.log(err);
+            console.log("File deleted successfully!");
+        });
     });
-    res.sendStatus(200);
+    // // res.sendStatus(200);
 });
 
 router.post('/transcode', addLocals, (req, res, next) => {
