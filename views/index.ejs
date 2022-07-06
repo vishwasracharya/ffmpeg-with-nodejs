@@ -54,31 +54,33 @@
                       <option>WAV</option>
                     </select>
                   </div> -->
-                  <div class="form-select-wrapper mb-5 w-100">
-                    <label class="mb-1 me-3" for="convertTo">Convert To:</label>
-                    <select class="form-select" id="convertTo" name="from">
-                      <option>AVI</option>
-                      <option>MP4</option>
-                      <option>FLV</option>
-                      <option>GIF</option>
-                      <option>MOV</option>
-                      <option>MPEG</option>
-                      <option>SWF</option>
-                      <option>VOB</option>
-                      <option>WEBM</option>
-                      <option>FLAC</option>
-                      <option>MP2</option>
-                      <option>MP3</option>
-                      <option>OGG</option>
-                      <option>OPUS</option>
-                      <option>WAV</option>
-                    </select>
-                  </div>
-                  <div class="">
-                    <input class="form-control me-3 mb-5" type="file" id="chooseFile" name="file" required/>
-                    <p class="text-red text-center d-none" id="formatErrMsg">File Format is Not Supported</p>
-                    <button class="btn btn-blue w-100" id="uploadFileBtn">Upload & Convert</button>
-                  </div>
+                  <!-- <form id="submitVideoForm" enctype="multipart/form-data"> -->
+                    <div class="form-select-wrapper mb-5 w-100">
+                      <label class="mb-1 me-3" for="convertTo">Convert To:</label>
+                      <select class="form-select" id="convertTo" name="from">
+                        <option>AVI</option>
+                        <option>MP4</option>
+                        <option>FLV</option>
+                        <option>GIF</option>
+                        <option>MOV</option>
+                        <option>MPEG</option>
+                        <option>SWF</option>
+                        <option>VOB</option>
+                        <option>WEBM</option>
+                        <option>FLAC</option>
+                        <option>MP2</option>
+                        <option>MP3</option>
+                        <option>OGG</option>
+                        <option>OPUS</option>
+                        <option>WAV</option>
+                      </select>
+                    </div>
+                    <div class="">
+                      <input class="form-control me-3 mb-5" type="file" id="chooseFile" name="file" required/>
+                      <p class="text-red text-center d-none" id="formatErrMsg">File Format is Not Supported</p>
+                      <button class="btn btn-blue w-100" id="uploadFileBtn" type="submit">Upload & Convert</button>
+                    </div>
+                  <!-- </form> -->
                 </div>
 
               </div>
@@ -92,7 +94,7 @@
                   <!-- <a href="" class="btn btn-dark w-100 d-none" id="downloadConvertedFileBtn" download>Download</a> -->
                   <form action="/downloadDeleteConvertedFile" method="post">
                     <input type="hidden" name="filename" id="filename" value="">
-                    <button class="btn btn-dark w-100" id="downloadBtn">Download</button>
+                    <button class="btn btn-dark w-100" id="downloadBtn" type="submit">Download</button>
                   </form>
                 </div>
               </div>
@@ -176,6 +178,7 @@
       }
     });    
 
+    // document.getElementById('submitVideoForm').addEventListener('submit', (e) => {
     document.getElementById('uploadFileBtn').addEventListener('click', (e) => {
       e.preventDefault();
       let outputFilename = `${file.name.split(" ").join("-").split(".")[0].toLowerCase()}.${document.getElementById('convertTo').value.toLowerCase()}`;

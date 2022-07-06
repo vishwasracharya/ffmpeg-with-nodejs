@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const util = require('util');
+const readFile = util.promisify(fs.readFile)
 const keys = require('../keys');
+const multer  = require('multer')
+const upload = multer({ dest: 'tmp/' })
 
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
@@ -38,19 +42,24 @@ router.post('/testing-route', (req, res, next) => {
     res.sendStatus(200);
 });
 
-router.post('/convertOriginalFile', addLocals, (req, res, next) => {
+router.post('/convertOriginalFile', async (req, res, next) => {
     req.setTimeout(1000000);
     if (!req.files) {
-        res.status(400);
+        res.status(200).json({
+            ok: false,
+            error: true,
+            status: 200,
+            message: 'No files were uploaded.'
+        })
         return;
     } else {
         console.log(req.files);
         const convertToFormat = req.headers.to;
+        console.log(req.headers);
         const video = req.files.file;
         let videoName = video.name.split(" ").join("-").toLowerCase();
         const outputFileName = `${videoName.split(".")[0]}.${convertToFormat}`;
         let videoPath = uploadDir + videoName;
-        // let infs = new ffmpeg();
 
         console.log(outputFileName);
         console.log(videoPath);
@@ -75,21 +84,32 @@ router.post('/convertOriginalFile', addLocals, (req, res, next) => {
         .on('error', (err) => {
             console.log('an error happened: ' + err.message);
             fs.unlink(videoPath, (err) => {
-                if (err) throw err;
+                // if (err) throw err;
                 console.log("File deleted successfully!");
             });
-        }
-        ).on('progress', function (progress) {
+            res.status(200).json({
+                ok: false,
+                error: true,
+                status: 200,
+                message: err.message
+            })
+        })
+        .on('progress', function (progress) {
             console.log('Processing: ' + progress.percent + '%')
         })
         .on('end', () => {
             fs.unlink(videoPath, (err) => {
-                if (err) throw err;
+                // if (err) throw err;
                 console.log("File deleted successfully!");
             });
             console.log('Processing finished!');
             console.log('conversion finished');
-            res.sendStatus(200);
+            res.status(200).json({
+                ok: true,
+                error: false,
+                status: 200,
+                message: 'File Converted successfully!'
+            })
         })
         .run();
         // .saveToFile(keys.publicDir + outputFileName);
