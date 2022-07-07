@@ -32,14 +32,9 @@ function getPathFromUrl(url) {
 
 router.get('/', addLocals, function (req, res, next) {
     res.render('index', {
-        title: 'Video Converter Tool | Playstory',
+        title: 'Video Converter Tool',
         message: 'Welcome to my Basic Node Website'
     });
-});
-
-router.post('/testing-route', (req, res, next) => {
-    console.log("Testing Route");
-    res.sendStatus(200);
 });
 
 router.post('/convertOriginalFile', async (req, res, next) => {
@@ -112,7 +107,6 @@ router.post('/convertOriginalFile', async (req, res, next) => {
             })
         })
         .run();
-        // .saveToFile(keys.publicDir + outputFileName);
     }
 })
 
@@ -128,60 +122,6 @@ router.post('/downloadDeleteConvertedFile', (req, res, next) => {
             console.log("File deleted successfully!");
         });
     });
-    // // res.sendStatus(200);
-});
-
-router.post('/transcode', addLocals, (req, res, next) => {
-    let data = req.body
-    // let to = req.body.to;
-    let file = req.files.file;
-    console.log(file)
-    // let fileName = `output.${to}`;
-    // var command = new ffmpeg();
-    console.log(data)
-
-    // file.mv("tmp/" + file.name, function (err) {
-    //     if (err) return res.sendStatus(500).send(err);
-    //     console.log("File Uploaded successfully");
-    // });
-
-    // ffmpeg("tmp/" + file.name)
-    //     .withOutputFormat(to)
-    //     .on('start', function(commandLine){
-    //         console.log('Started processing' + commandLine);
-    //     })
-        // .on('progress', function (progress) {
-        //     console.log('Processing: ' + progress.percent + '% done')
-        // })
-    //     .on("end", function (stdout, stderr) {
-    //         console.log("Finished");
-
-    //         /* Download  */
-    //         res.download(__dirname + fileName, function (err) {
-    //             if (err) throw err;
-    //             console.log('File Downloaded Successfully');
-
-    //             fs.unlink(__dirname + fileName, function (err) {
-    //                 if (err) throw err;
-    //                 console.log("Output Video File deleted");
-    //             });
-    //         });
-
-    //         /* Delete File From tmp */
-    //         fs.unlink("tmp/" + file.name, function (err) {
-    //             if (err) throw err;
-    //             console.log('-----------IN ON END FUNCTION-----------');
-    //             console.log("Original Video File deleted");
-    //         });
-    //     })
-    //     .on("error", function (err) {
-    //         console.log("ERROR!!! " + err.message);
-    //         fs.unlink("tmp/" + file.name, function (err) {
-    //             if (err) throw err;
-    //             console.log("Original Video File deleted");
-    //         });
-    //     })
-    //     .saveToFile(__dirname + fileName);
 });
 
 function addLocals(req, res, next) {
