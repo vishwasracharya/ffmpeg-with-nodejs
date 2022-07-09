@@ -5,8 +5,72 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%=title%></title>
+  <link rel="stylesheet" href="/dist/css/index.css">
+  <%#- include("includes/styles.ejs") %>
 </head>
 <body>
-  <%=message%> 
+
+  <section class="my-5 py-5">
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-md-12">
+              <div class="text-center">
+                <img class="img-fluid" width="150" src="/img/convert.png" alt="Convert Icon">
+              </div>
+            </div> 
+        </div>
+
+        <div class="row">
+          <div class="col-md-5 mx-auto">
+            <div class="text-center">
+              <h1>Video Converter Tool</h1>
+              <h2 class="lead">Convert your videos to multiple formats (MP4, AVI, MKV, WMV, and more) online, free</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="row my-3" id="FileSeletionForm">
+          <div class="col-md-7 col-lg-5 mx-auto">
+
+            <div class="my-7">
+              <div class="form-select-wrapper mb-5 w-100">
+                <label class="mb-1 me-3" for="convertTo">Convert To:</label>
+                <select class="form-select" id="convertTo" name="from">
+                  <option>AVI</option>
+                  <option>MP4</option>
+                  <option>FLV</option>
+                  <option>GIF</option>
+                  <option>MOV</option>
+                  <option>MPEG</option>
+                  <option>WEBM</option>
+                </select>
+              </div>
+              <div class="">
+                <input class="form-control me-3 mb-5" type="file" id="chooseFile" name="file" required/>
+                <p class="text-red text-center d-none" id="formatErrMsg">File Format is Not Supported</p>
+                <button class="btn btn-light border w-100" id="uploadFileBtn" type="submit">Upload & Convert</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row my-3 d-none" id="successMsg">
+          <div class="col-md-7 col-lg-5 mx-auto">
+            <div class="mb-4 text-center">
+              <h3>Video Converted Successfully.</h3>
+              <p class="text-muted">Click on the below button to download your converted video</p>
+                <input type="hidden" name="filename" id="filename" value="">
+                <button class="btn btn-dark w-100" id="downloadBtn" type="submit">Download</button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- <div class="is-invalid is-valid btn-danger  d-none"><div class="spinner-border spinner-border-sm text-white text-dark me-3" role="status"></div></div> -->
+
+  <%- include("includes/scripts.ejs") %>
+  <script src="/dist/js/video-converter.js"></script>
 </body>
 </html>
