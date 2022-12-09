@@ -1,3 +1,5 @@
+This is a web app that helps you convert videos to mp3, mp4, and other formats. I built this tools as a part of my company project, and I made some changes and updations to the code, and added it to GitHub.
+
 ## STEPS TO RUN THIS FILE
 
 1. git clone https://github.com/vishwasracharya/ffmpeg-with-nodejs.git
