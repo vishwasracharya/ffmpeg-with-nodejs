@@ -1,4 +1,5 @@
 This is a web app that helps you convert videos to mp3, mp4, and other formats. I built this tools as a part of my company project, and I made some changes and updations to the code, and added it to GitHub.
+> Note: Don't deploy this code on heroku, because there is a policy for tools like this, hence If you deploy this in Heroku then you'll get Locked Out from your account.
 
 ## STEPS TO RUN THIS FILE
 
