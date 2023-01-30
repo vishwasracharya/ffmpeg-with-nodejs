@@ -27,7 +27,7 @@ This is a web app that helps you convert videos to mp3, mp4, and other formats. 
   <a href="https://www.linkedin.com/in/vishwasracharya">
     <img width="30px" src="https://www.vectorlogo.zone/logos/linkedin/linkedin-icon.svg" />
   </a>&ensp;
-  <a href="https://vishwasracharya.herokuapp.com">
+  <a href="https://vishwasracharya.github.io">
     <img width="30px" src="https://img.icons8.com/fluency/48/000000/domain.png" />
   </a>&ensp;
   <a href="https://www.instagram.com/vishwasracharya">
